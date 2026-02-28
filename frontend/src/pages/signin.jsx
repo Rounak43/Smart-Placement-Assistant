@@ -63,7 +63,7 @@ export default function Signin() {
         <p className="subtitle">
           Welcome back! Please login to your account
         </p>
-        {loginError && <p style={{ color: '#ef4444', margin: '0', fontSize: '0.9rem', textAlign: 'center' }}>{loginError}</p>}
+        {loginError && <p className="error-message">{loginError}</p>}
 
         <label htmlFor="email">Email</label>
         <input

@@ -75,7 +75,7 @@ export default function SignUp() {
       <form onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
         <p className="subtitle">Create your account to get started</p>
-        {signupError && <p style={{ color: '#ef4444', margin: '0', fontSize: '0.9rem', textAlign: 'center' }}>{signupError}</p>}
+        {signupError && <p className="error-message">{signupError}</p>}
 
 
         <input

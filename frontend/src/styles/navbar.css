@@ -200,3 +200,16 @@
     display: block;
     opacity: 1;
 }
+
+.nav-profile-icon {
+    font-size: 40px !important;
+}
+
+.nav-link-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+}

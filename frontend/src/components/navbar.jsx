@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase/firebase'
+import { Link } from 'react-router-dom'
 
 export default function Navbar({ user }) {
     const [drawerOpen, setDrawerOpen] = useState(false)
@@ -51,7 +52,7 @@ export default function Navbar({ user }) {
 
                     <div className="dropdown">
                         <div className="profile">
-                            <AccountCircleIcon style={{ fontSize: 40 }} />
+                            <AccountCircleIcon className="nav-profile-icon" />
                             <div>
                                 <h4>{user?.displayName || 'User'}</h4>
                                 <p>{user?.email || 'no-reply@example.com'}</p>
@@ -67,11 +68,19 @@ export default function Navbar({ user }) {
                     Menu
                 </div>
                 <ul>
-                    <li><HomeIcon className="menu-item-icon" /> <span>Home</span></li>
+                    <li>
+                        <Link to="/dashboard" className="nav-link-item">
+                            <HomeIcon className="menu-item-icon" /> <span>Home</span>
+                        </Link>
+                    </li>
                     <li><WorkIcon className="menu-item-icon" /> <span>Job / Opportunities</span></li>
                     <li><DescriptionIcon className="menu-item-icon" /> <span>Applications</span></li>
                     <li><AssessmentIcon className="menu-item-icon" /> <span>Analysis/Performance</span></li>
-                    <li><PersonIcon className="menu-item-icon" /> <span>Profile</span></li>
+                    <li>
+                        <Link to="/dashboard/profile" className="nav-link-item">
+                            <PersonIcon className="menu-item-icon" /> <span>Profile</span>
+                        </Link>
+                    </li>
                     <li><SettingsIcon className="menu-item-icon" /> <span>Setting</span></li>
                 </ul>
             </div>

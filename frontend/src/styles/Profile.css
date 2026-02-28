@@ -1,0 +1,187 @@
+/* Profile Settings Page Styles */
+
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.profile-title {
+    font-family: 'Outfit', sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+.profile-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.profile-card {
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.profile-message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+}
+
+.profile-message.success {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.profile-message.error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profile-section-title {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 0.5rem;
+}
+
+.profile-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.profile-grid-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.profile-full-width {
+    grid-column: 1 / -1;
+}
+
+.profile-readonly-input {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.profile-section-margin {
+    margin-top: 1rem;
+}
+
+.profile-rating-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-rating-slider {
+    flex: 1;
+}
+
+.profile-rating-value {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--accent-primary);
+    min-width: 40px;
+}
+
+.profile-submit-btn {
+    margin-top: 1rem;
+    padding: 12px 24px;
+    background-color: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.profile-submit-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Resume Upload Styles */
+.profile-resume-container {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+}
+
+.profile-resume-link-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-resume-icon {
+    font-size: 1.2rem;
+}
+
+.profile-resume-link {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.profile-resume-remove {
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.profile-resume-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-resume-input {
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    color: var(--text-primary);
+}
+
+.profile-resume-clear {
+    padding: 6px 12px;
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.profile-upload-progress {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .profile-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
