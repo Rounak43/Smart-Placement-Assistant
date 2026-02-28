@@ -1,0 +1,38 @@
+.midcircle{
+    width: 150px;
+    height: 150px;
+    background-color: #ffffffd8;
+    border-radius: 50%;
+}
+.signup-btn{
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    cursor: pointer;
+}
+.signin-btn{
+    position: absolute;
+    bottom: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    cursor: pointer;
+    
+}
+.midline{
+    position: absolute;
+    top: 48.8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 2px;
+    background-color: black;
+}

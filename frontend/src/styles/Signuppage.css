@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+    background-color: #0f172a;
+    /* Match landing page dark bg */
+    font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
+    color: #f8fafc;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    /* MAGIC spacing */
+}
+
+
+input,
+button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.6);
+    color: white;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+
+button {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 18px;
+    background: #3b82f6;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.icon {
+    position: absolute;
+    /* Icon needs absolute positioning */
+    left: 10px;
+    /* Position the icon inside the container */
+    color: #888;
+    pointer-events: none;
+    /* Allows clicks to pass through to the input */
+}
+
+
+.input-field:focus {
+    outline: none;
+    /* Remove default focus outline */
+}
+
+label {
+    align-self: flex-start;
+    /* Align labels to the left */
+
+    font-weight: 500;
+}
+
+.auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.auth-container {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s, transform 0.2s;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.auth-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Card that holds signin/signup */
+.auth-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 35px 30px 35px;
+    border-radius: 16px;
+    background-color: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    color: #f8fafc;
+}
+
+.auth-toggle {
+    display: flex;
+    border-radius: 8px;
+    background: rgba(15, 23, 42, 0.6);
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 4px;
+    gap: 4px;
+}
+
+.auth-toggle button {
+    flex: 1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    background: transparent;
+    color: #94a3b8;
+    padding: 10px;
+    margin: 0;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.auth-toggle button:hover {
+    color: white;
+}
+
+.auth-toggle button.active {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+@media (max-width:480px) {
+
+    .auth-box {
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    input,
+    button {
+        padding: 11px;
+    }
+}
+
+h1,
+p,
+h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
