@@ -5,7 +5,10 @@
     margin: 0 auto;
     padding: 2rem;
 }
-
+.profile-header{
+    align-items: center;
+    margin-bottom: 1rem;
+}
 .profile-title {
     font-family: 'Outfit', sans-serif;
     margin-bottom: 0.5rem;
@@ -178,6 +181,78 @@
     margin-top: 10px;
     font-size: 0.9rem;
     color: var(--text-secondary);
+}
+
+/* View Mode Styles */
+.profile-edit-btn {
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.profile-edit-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile-cancel-btn {
+    padding: 12px 24px;
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.profile-cancel-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.profile-data-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 12px 16px;
+}
+
+.profile-data-box label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.profile-value-display {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.empty-val {
+    color: var(--text-secondary);
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.profile-view-link {
+    display: inline-block;
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.profile-view-link:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
