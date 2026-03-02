@@ -5,8 +5,9 @@ import { auth } from './firebase/firebase'
 import Landingpage from './pages/landingpage'
 import Dashboard from './pages/Dashboard'
 import DashboardHome from './pages/DashboardHome'
-import Profile from './pages/Profile' // Will create this next
+import Profile from './pages/Profile'
 import Setting from './pages/Setting'
+import Jobs from './pages/Jobs'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -36,6 +37,7 @@ function App() {
           <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/" />}>
             {/* Default Dashboard View */}
             <Route index element={<DashboardHome />} />
+            <Route path="jobs" element={<Jobs />} />
             <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
             <Route path="setting" element={<Setting />} />
           </Route>

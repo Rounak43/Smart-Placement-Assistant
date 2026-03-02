@@ -74,9 +74,9 @@ export default function Navbar({ user }) {
                         </Link>
                     </li>
                     <li>
-                        <div className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                        <Link to="/dashboard/jobs" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
                             <WorkIcon className="menu-item-icon" /> <span>Job / Opportunities</span>
-                        </div>
+                        </Link>
                     </li>
                     <li>
                         <div className="nav-link-item" onClick={() => setDrawerOpen(false)}>
