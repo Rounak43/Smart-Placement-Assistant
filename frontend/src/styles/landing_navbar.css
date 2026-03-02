@@ -1,11 +1,11 @@
 .navbar {
     width: 90%;
     height: 64px;
-    background-color: rgba(30, 41, 59, 0.8);
-    /* Glassmorphism dark slate */
+    background-color: var(--bg-secondary);
+    /* Glassmorphism slate */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-subtle);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     display: grid;
@@ -22,7 +22,7 @@
 }
 
 .title {
-    color: white;
+    color: var(--text-primary);
     font-family: Arial, sans-serif;
     font-size: 20px;
     font-weight: 600;
@@ -56,12 +56,12 @@
 
 .nav-actions .btn.ghost {
     background-color: transparent;
-    color: white;
-    border: 1px solid white;
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
 }
 
 .nav-actions .btn.ghost:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--bg-overlay-hover);
 }
 
 .nav-actions .btn.primary {

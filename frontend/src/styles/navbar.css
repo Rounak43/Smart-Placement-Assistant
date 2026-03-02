@@ -1,7 +1,7 @@
 .navbar {
     width: 90%;
     height: 64px;
-    background-color: #333;
+    background-color: var(--bg-secondary);
     border-radius: 16px;
     position: relative;
     margin: 40px auto 0 auto;
@@ -15,7 +15,7 @@
 }
 
 .menu-icon {
-    color: white;
+    color: var(--text-primary);
     font-size: 32px;
     cursor: pointer;
     display: flex;
@@ -25,7 +25,7 @@
 }
 
 .title {
-    color: white;
+    color: var(--text-primary);
     font-family: 'Inter', Arial, sans-serif;
     font-size: 22px;
     font-weight: 700;
@@ -36,7 +36,7 @@
 
 .account {
     position: relative;
-    color: white;
+    color: var(--text-primary);
     font-size: 32px;
     cursor: pointer;
     display: flex;
@@ -50,8 +50,8 @@
     top: calc(100% + 12px);
     right: 0;
     min-width: 220px;
-    background-color: #444;
-    color: #fff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     padding: 12px;
@@ -81,7 +81,7 @@
     gap: 12px;
     align-items: center;
     padding: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-subtle);
     margin-bottom: 8px;
 }
 
@@ -94,7 +94,7 @@
 .dropdown .profile p {
     margin: 0;
     font-size: 13px;
-    color: #bbb;
+    color: var(--text-secondary);
 }
 
 .dropdown button {
@@ -120,9 +120,9 @@
     top: 0;
     width: 280px;
     height: 100%;
-    background-color: #333;
+    background-color: var(--bg-secondary);
     /* Matches account dropdown color */
-    color: #fff;
+    color: var(--text-primary);
     transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 30;
     padding-top: 100px;
@@ -140,8 +140,8 @@
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 1px;
-    color: #fff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-subtle);
     margin-bottom: 20px;
     font-family: 'Inter', Arial, sans-serif;
 }
@@ -153,36 +153,12 @@
 }
 
 .side-drawer li {
-    padding: 14px 20px;
-    border-radius: 12px;
     margin-bottom: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 16px;
-    font-weight: 500;
-    font-family: 'Inter', Arial, sans-serif;
-    color: #ddd;
-    transition: background 0.3s ease, color 0.3s ease;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-.side-drawer li:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
-
-.side-drawer li:active {
-    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .menu-item-icon {
     font-size: 24px !important;
-    color: #aaa;
+    color: var(--text-secondary);
 }
 
 .overlay {
@@ -209,7 +185,28 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    color: inherit;
+    color: var(--text-secondary);
     text-decoration: none;
     width: 100%;
+    padding: 14px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Inter', Arial, sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.nav-link-item:hover {
+    background-color: var(--bg-overlay-hover);
+    color: var(--text-primary);
+}
+
+.nav-link-item:active {
+    background-color: var(--border-strong);
 }

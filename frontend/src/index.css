@@ -12,6 +12,9 @@
 
   /* Shared values for dynamic interface */
   --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --bg-overlay: rgba(255, 255, 255, 0.05);
+  --bg-overlay-hover: rgba(255, 255, 255, 0.1);
   --border-radius-md: 12px;
   --border-radius-lg: 16px;
   --transition-fast: 0.2s ease;
@@ -29,6 +32,23 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent-primary: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.2);
+
+  --border-subtle: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.25);
+  --bg-overlay: rgba(0, 0, 0, 0.05);
+  --bg-overlay-hover: rgba(0, 0, 0, 0.1);
+
+  color-scheme: light;
 }
 
 /* Base resets */
@@ -109,7 +129,7 @@ a:hover {
 /* Global button reset and styling */
 button {
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-subtle);
   padding: 0.6em 1.2em;
   font-size: 0.95rem;
   font-weight: 500;

@@ -6,12 +6,16 @@ import Landingpage from './pages/landingpage'
 import Dashboard from './pages/Dashboard'
 import DashboardHome from './pages/DashboardHome'
 import Profile from './pages/Profile' // Will create this next
+import Setting from './pages/Setting'
 
 function App() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark'
+    document.documentElement.setAttribute('data-theme', savedTheme)
+
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u)
       setLoading(false)
@@ -32,7 +36,8 @@ function App() {
           <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/" />}>
             {/* Default Dashboard View */}
             <Route index element={<DashboardHome />} />
-            <Route path="profile" element={<Profile user={user} />} />
+            <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
+            <Route path="setting" element={<Setting />} />
           </Route>
         </Routes>
       </div>

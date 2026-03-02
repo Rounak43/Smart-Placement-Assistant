@@ -69,19 +69,35 @@ export default function Navbar({ user }) {
                 </div>
                 <ul>
                     <li>
-                        <Link to="/dashboard" className="nav-link-item">
+                        <Link to="/dashboard" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
                             <HomeIcon className="menu-item-icon" /> <span>Home</span>
                         </Link>
                     </li>
-                    <li><WorkIcon className="menu-item-icon" /> <span>Job / Opportunities</span></li>
-                    <li><DescriptionIcon className="menu-item-icon" /> <span>Applications</span></li>
-                    <li><AssessmentIcon className="menu-item-icon" /> <span>Analysis/Performance</span></li>
                     <li>
-                        <Link to="/dashboard/profile" className="nav-link-item">
+                        <div className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                            <WorkIcon className="menu-item-icon" /> <span>Job / Opportunities</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                            <DescriptionIcon className="menu-item-icon" /> <span>Applications</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                            <AssessmentIcon className="menu-item-icon" /> <span>Analysis/Performance</span>
+                        </div>
+                    </li>
+                    <li>
+                        <Link to="/dashboard/profile" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
                             <PersonIcon className="menu-item-icon" /> <span>Profile</span>
                         </Link>
                     </li>
-                    <li><SettingsIcon className="menu-item-icon" /> <span>Setting</span></li>
+                    <li>
+                        <Link to="/dashboard/setting" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                            <SettingsIcon className="menu-item-icon" /> <span>Setting</span>
+                        </Link>
+                    </li>
                 </ul>
             </div>
 

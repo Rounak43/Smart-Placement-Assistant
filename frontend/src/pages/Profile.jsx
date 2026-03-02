@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { updateProfile, updatePassword } from "firebase/auth"
+import { updateProfile } from "firebase/auth"
 import { doc, setDoc, getDoc } from "firebase/firestore"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { auth, db, storage } from "../firebase/firebase"
 import '../styles/Signuppage.css' // Reusing auth styles for consistent form look
 import '../styles/Profile.css' // Imported the new CSS file
 
-export default function Profile({ user }) {
+export default function Profile({ user, setUser }) {
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState({ type: '', text: '' })
     const [isEditing, setIsEditing] = useState(false)
@@ -18,7 +18,7 @@ export default function Profile({ user }) {
     // Form State
     const [formData, setFormData] = useState({
         name: user?.displayName || "",
-        newPassword: "",
+        phone: "",
         collegeName: "",
         courseBranch: "",
         skills: "", // Comma separated
@@ -38,6 +38,7 @@ export default function Profile({ user }) {
                         const data = docSnap.data()
                         setFormData(prev => ({
                             ...prev,
+                            phone: data.phone || "",
                             collegeName: data.collegeName || "",
                             courseBranch: data.courseBranch || "",
                             skills: data.skills || "",
@@ -114,11 +115,9 @@ export default function Profile({ user }) {
             // 1. Update Auth Profile (Name)
             if (formData.name !== user.displayName) {
                 await updateProfile(user, { displayName: formData.name })
-            }
-
-            // 2. Update Auth Password (if provided)
-            if (formData.newPassword) {
-                await updatePassword(user, formData.newPassword)
+                if (setUser) {
+                    setUser({ ...user, displayName: formData.name })
+                }
             }
 
             // 3. Handle Resume Upload (If a new file is attached)
@@ -131,6 +130,7 @@ export default function Profile({ user }) {
             await setDoc(doc(db, "users", user.uid), {
                 email: user.email,
                 name: formData.name,
+                phone: formData.phone,
                 collegeName: formData.collegeName,
                 courseBranch: formData.courseBranch,
                 skills: formData.skills,
@@ -141,7 +141,7 @@ export default function Profile({ user }) {
             }, { merge: true }) // Merge so we don't overwrite if other fields exist
 
             setMessage({ type: 'success', text: 'Profile updated successfully!' })
-            setFormData(prev => ({ ...prev, newPassword: "", resumeUrl: currentResumeUrl })) // update state
+            setFormData(prev => ({ ...prev, resumeUrl: currentResumeUrl })) // update state
             setResumeFile(null) // clear file input
             setUploadProgress(0) // reset progress
             setIsEditing(false) // switch back to view mode
@@ -197,8 +197,8 @@ export default function Profile({ user }) {
                                     <input type="email" value={user?.email || ""} disabled className="profile-readonly-input" />
                                 </div>
                                 <div className="input-field profile-full-width">
-                                    <label>New Password (leave blank to keep current)</label>
-                                    <input type="password" name="newPassword" value={formData.newPassword} onChange={handleChange} placeholder="Enter new password to change" />
+                                    <label>Phone Number</label>
+                                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" />
                                 </div>
                             </div>
                         </div>
@@ -333,6 +333,7 @@ export default function Profile({ user }) {
                         <div className="profile-grid-2">
                             <ProfileDataField label="Full Name" value={formData.name} />
                             <ProfileDataField label="Email Address" value={user?.email} />
+                            <ProfileDataField label="Phone Number" value={formData.phone} />
                         </div>
 
                         <h3 className="profile-section-title profile-section-margin">Education</h3>

@@ -2,11 +2,12 @@
 	--primary: #3b82f6;
 	/* bright neon-ish blue */
 	--primary-hover: #2563eb;
-	--muted: #94a3b8;
-	--bg: #0f172a;
-	/* midnight slate dark */
-	--card-bg: #1e293b;
-	--text-main: #f8fafc;
+	--primary: #3b82f6;
+	--primary-hover: #2563eb;
+	--muted: var(--text-secondary);
+	--bg: var(--bg-primary);
+	--card-bg: var(--bg-secondary);
+	--text-main: var(--text-primary);
 }
 
 .landingpage {
@@ -66,8 +67,8 @@
 
 .hero-ctas .ghost {
 	background: transparent;
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	color: white;
+	border: 1px solid var(--border-strong);
+	color: var(--text-primary);
 	padding: 0.75rem 1.5rem;
 	border-radius: 8px;
 	font-weight: 600;
@@ -75,7 +76,7 @@
 }
 
 .hero-ctas .ghost:hover {
-	background: rgba(255, 255, 255, 0.05);
+	background: var(--bg-overlay);
 }
 
 .important-info {
@@ -123,7 +124,7 @@
 	max-width: 460px;
 	border-radius: 16px;
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	border: 1px solid var(--border-subtle);
 	z-index: 1;
 	position: relative;
 }
@@ -154,7 +155,7 @@
 	width: 100%;
 	border-radius: 16px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-	border: 1px solid rgba(255, 255, 255, 0.05);
+	border: 1px solid var(--border-subtle);
 }
 
 .feature-body {
@@ -165,7 +166,7 @@
 .feature-body h3 {
 	margin: 0 0 1rem;
 	font-size: 1.8rem;
-	color: #f8fafc;
+	color: var(--text-primary);
 }
 
 .feature-body p {
