@@ -10,8 +10,8 @@ export default function Dashboard({ user }) {
                 <Navbar user={user} />
             </div>
             <div className='content'>
-                
-                <Outlet />
+
+                <Outlet context={{ user }} />
             </div>
             <Footer />
         </div>

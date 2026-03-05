@@ -34,15 +34,40 @@
     letter-spacing: 0.5px;
 }
 
-.account {
-    position: relative;
-    color: var(--text-primary);
-    font-size: 32px;
-    cursor: pointer;
+.nav-right {
     display: flex;
     align-items: center;
     flex: 1;
     justify-content: flex-end;
+    gap: 16px;
+}
+
+.account {
+    position: relative;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.nav-date-time {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
 }
 
 .account .dropdown {

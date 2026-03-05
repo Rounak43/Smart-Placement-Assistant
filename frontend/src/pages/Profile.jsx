@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { updateProfile } from "firebase/auth"
 import { doc, setDoc, getDoc } from "firebase/firestore"
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
-import { auth, db, storage } from "../firebase/firebase"
+import { auth, db } from "../firebase/firebase"
 import '../styles/Signuppage.css' // Reusing auth styles for consistent form look
 import '../styles/Profile.css' // Imported the new CSS file
 
@@ -10,10 +9,6 @@ export default function Profile({ user, setUser }) {
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState({ type: '', text: '' })
     const [isEditing, setIsEditing] = useState(false)
-
-    // File Upload State
-    const [resumeFile, setResumeFile] = useState(null)
-    const [uploadProgress, setUploadProgress] = useState(0)
 
     // Form State
     const [formData, setFormData] = useState({
@@ -23,8 +18,8 @@ export default function Profile({ user, setUser }) {
         courseBranch: "",
         skills: "", // Comma separated
         interestedFields: "", // Comma separated
-        skillRating: "0", // 0 to 5
-        resumeUrl: "" // URL to the uploaded resume
+        skillRating: "0" // 0 to 5
+
     })
 
     // Fetch existing custom data from Firestore when component mounts
@@ -43,8 +38,7 @@ export default function Profile({ user, setUser }) {
                             courseBranch: data.courseBranch || "",
                             skills: data.skills || "",
                             interestedFields: data.interestedFields || "",
-                            skillRating: data.skillRating || "0",
-                            resumeUrl: data.resumeUrl || ""
+                            skillRating: data.skillRating || "0"
                         }))
                     }
                 } catch (error) {
@@ -59,57 +53,10 @@ export default function Profile({ user, setUser }) {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const handleFileChange = (e) => {
-        if (e.target.files[0]) {
-            setResumeFile(e.target.files[0])
-        }
-    }
-
-    const uploadResume = async () => {
-        if (!resumeFile) return formData.resumeUrl; // Return existing if no new file
-
-        try {
-            console.log("Starting resume upload for:", resumeFile.name);
-            // We use uploadBytes from firebase/storage - I will import it below if it's missing but it's not, I'll use uploadBytesResumable still but with async await directly on it
-            const fileRef = ref(storage, `resumes/${user.uid}/${resumeFile.name}`);
-
-            // To get progress we have to wrap in a promise
-            return await new Promise((resolve, reject) => {
-                const uploadTask = uploadBytesResumable(fileRef, resumeFile);
-
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log("Upload is " + progress + "% done");
-                        setUploadProgress(progress);
-                    },
-                    (error) => {
-                        console.error("Firebase Storage Upload Error:", error);
-                        reject(new Error("Failed to upload the file to Firebase: " + error.message));
-                    },
-                    async () => {
-                        try {
-                            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                            console.log("File available at", downloadURL);
-                            resolve(downloadURL);
-                        } catch (err) {
-                            reject(new Error("Failed to get download URL: " + err.message));
-                        }
-                    }
-                );
-            });
-        } catch (error) {
-            console.error("Error in uploadResume function:", error);
-            throw error;
-        }
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
         setMessage({ type: '', text: '' })
-        setUploadProgress(0)
 
         try {
             // 1. Update Auth Profile (Name)
@@ -118,12 +65,6 @@ export default function Profile({ user, setUser }) {
                 if (setUser) {
                     setUser({ ...user, displayName: formData.name })
                 }
-            }
-
-            // 3. Handle Resume Upload (If a new file is attached)
-            let currentResumeUrl = formData.resumeUrl;
-            if (resumeFile) {
-                currentResumeUrl = await uploadResume();
             }
 
             // 4. Save Custom Data to Firestore
@@ -136,14 +77,10 @@ export default function Profile({ user, setUser }) {
                 skills: formData.skills,
                 interestedFields: formData.interestedFields,
                 skillRating: formData.skillRating,
-                resumeUrl: currentResumeUrl, // Include the URL here
                 updatedAt: new Date()
             }, { merge: true }) // Merge so we don't overwrite if other fields exist
 
             setMessage({ type: 'success', text: 'Profile updated successfully!' })
-            setFormData(prev => ({ ...prev, resumeUrl: currentResumeUrl })) // update state
-            setResumeFile(null) // clear file input
-            setUploadProgress(0) // reset progress
             setIsEditing(false) // switch back to view mode
 
         } catch (error) {
@@ -248,77 +185,13 @@ export default function Profile({ user, setUser }) {
                                     </div>
                                 </div>
 
-                                {/* Resume Upload Section */}
-                                <div className="input-field profile-section-margin">
-                                    <label>Upload Resume (PDF preferred)</label>
-
-                                    {formData.resumeUrl && !resumeFile && (
-                                        <div className="profile-resume-container">
-                                            <div className="profile-resume-link-wrap">
-                                                <span className="profile-resume-icon">📄</span>
-                                                <a href={formData.resumeUrl} target="_blank" rel="noopener noreferrer" className="profile-resume-link">
-                                                    View Uploaded Resume
-                                                </a>
-                                            </div>
-                                            <span
-                                                onClick={async () => {
-                                                    if (window.confirm("Are you sure you want to remove your resume?")) {
-                                                        setLoading(true);
-                                                        setMessage({ type: '', text: '' });
-                                                        try {
-                                                            await setDoc(doc(db, "users", user.uid), {
-                                                                resumeUrl: ""
-                                                            }, { merge: true });
-
-                                                            setFormData(prev => ({ ...prev, resumeUrl: "" }));
-                                                            setMessage({ type: 'success', text: 'Resume removed successfully!' });
-                                                        } catch (error) {
-                                                            console.error("Error removing resume:", error);
-                                                            setMessage({ type: 'error', text: 'Failed to remove resume.' });
-                                                        } finally {
-                                                            setLoading(false);
-                                                        }
-                                                    }
-                                                }}
-                                                className="profile-resume-remove"
-                                                title="Remove Resume"
-                                            >
-                                                ✕ Remove
-                                            </span>
-                                        </div>
-                                    )}
-
-                                    <div className="profile-resume-input-wrap">
-                                        <input
-                                            type="file"
-                                            onChange={handleFileChange}
-                                            accept=".pdf,.doc,.docx"
-                                            className="profile-resume-input"
-                                        />
-                                        {resumeFile && (
-                                            <button
-                                                type="button"
-                                                onClick={() => setResumeFile(null)}
-                                                className="profile-resume-clear"
-                                            >
-                                                Clear Selection
-                                            </button>
-                                        )}
-                                    </div>
-                                    {uploadProgress > 0 && uploadProgress < 100 && (
-                                        <div className="profile-upload-progress">
-                                            Uploading... {Math.round(uploadProgress)}%
-                                        </div>
-                                    )}
-                                </div>
-
                             </div>
                         </div>
 
                         {/* Action Buttons */}
                         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                             <button type="submit" disabled={loading} className="profile-submit-btn" style={{ flex: 1 }}>
-                                {loading ? (uploadProgress > 0 && uploadProgress < 100 ? `Uploading Resume ${Math.round(uploadProgress)}%...` : 'Saving...') : 'Save Profile Changes'}
+                                {loading ? 'Saving...' : 'Save Profile Changes'}
                             </button>
                             <button type="button" onClick={() => setIsEditing(false)} className="profile-cancel-btn" style={{ padding: '0 2rem' }}>
                                 Cancel
@@ -348,7 +221,7 @@ export default function Profile({ user, setUser }) {
                             <ProfileDataField label="Interested Fields" value={formData.interestedFields} />
                             <div className="profile-grid-2">
                                 <ProfileDataField label="Overall Skill Level" value={`${formData.skillRating} / 5`} />
-                                <ProfileDataField label="Uploaded Resume File" value={formData.resumeUrl} isLink={true} />
+
                             </div>
                         </div>
 
