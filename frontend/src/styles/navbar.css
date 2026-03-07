@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
+
     box-sizing: border-box;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     z-index: 10;
@@ -234,4 +235,10 @@
 
 .nav-link-item:active {
     background-color: var(--border-strong);
+}
+
+@media (max-width: 768px) {
+    .nav-date-time {
+        display: none;
+    }
 }

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import GoogleLogin from "../components/GoogleLogin";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Signin() {
 
@@ -27,6 +28,7 @@ export default function Signin() {
   };
 
   const [loginError, setLoginError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -76,13 +78,40 @@ export default function Signin() {
         {formik.errors.email && <p>{formik.errors.email}</p>}
 
         <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          placeholder="Enter Password"
-        />
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            placeholder="Enter Password"
+            style={{ width: '100%', paddingRight: '40px' }}
+          />
+          <button
+            type="button"
+            className="password-toggle-btn"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: 'absolute',
+              right: '12px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: '#888',
+              padding: '0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 'auto',
+              margin: '0',
+              boxShadow: 'none'
+            }}
+          >
+            {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+          </button>
+        </div>
         {formik.errors.password && <p>{formik.errors.password}</p>}
 
         <button type="submit">Login</button>

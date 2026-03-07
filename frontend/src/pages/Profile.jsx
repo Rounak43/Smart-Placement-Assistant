@@ -16,10 +16,12 @@ export default function Profile({ user, setUser }) {
         phone: "",
         collegeName: "",
         courseBranch: "",
+        semester: "",
+        cgpa: "",
+        certifications: "",
+        internships: "",
         skills: "", // Comma separated
-        interestedFields: "", // Comma separated
-        skillRating: "0" // 0 to 5
-
+        interestedFields: "" // Comma separated
     })
 
     // Fetch existing custom data from Firestore when component mounts
@@ -36,9 +38,12 @@ export default function Profile({ user, setUser }) {
                             phone: data.phone || "",
                             collegeName: data.collegeName || "",
                             courseBranch: data.courseBranch || "",
+                            semester: data.semester || "",
+                            cgpa: data.cgpa || "",
+                            certifications: data.certifications || "",
+                            internships: data.internships || "",
                             skills: data.skills || "",
-                            interestedFields: data.interestedFields || "",
-                            skillRating: data.skillRating || "0"
+                            interestedFields: data.interestedFields || ""
                         }))
                     }
                 } catch (error) {
@@ -74,9 +79,12 @@ export default function Profile({ user, setUser }) {
                 phone: formData.phone,
                 collegeName: formData.collegeName,
                 courseBranch: formData.courseBranch,
+                semester: formData.semester,
+                cgpa: formData.cgpa,
+                certifications: formData.certifications,
+                internships: formData.internships,
                 skills: formData.skills,
                 interestedFields: formData.interestedFields,
-                skillRating: formData.skillRating,
                 updatedAt: new Date()
             }, { merge: true }) // Merge so we don't overwrite if other fields exist
 
@@ -152,6 +160,29 @@ export default function Profile({ user, setUser }) {
                                     <label>Course & Branch</label>
                                     <input type="text" name="courseBranch" value={formData.courseBranch} onChange={handleChange} placeholder="e.g. B.Tech Computer Science" />
                                 </div>
+                                <div className="input-field">
+                                    <label>Semester</label>
+                                    <input type="text" name="semester" value={formData.semester} onChange={handleChange} placeholder="e.g. 6th Semester" />
+                                </div>
+                                <div className="input-field">
+                                    <label>CGPA</label>
+                                    <input type="text" name="cgpa" value={formData.cgpa} onChange={handleChange} placeholder="e.g. 8.5" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Experience & Certifications Section */}
+                        <div className="profile-section-margin">
+                            <h3 className="profile-section-title">Experience & Certifications</h3>
+                            <div className="profile-grid-1">
+                                <div className="input-field">
+                                    <label>Certifications (comma separated)</label>
+                                    <input type="text" name="certifications" value={formData.certifications} onChange={handleChange} placeholder="e.g. AWS Certified Solutions Architect, Coursera Deep Learning" />
+                                </div>
+                                <div className="input-field">
+                                    <label>Internship Experience</label>
+                                    <textarea name="internships" value={formData.internships} onChange={handleChange} placeholder="Describe your internship experiences..." rows="3" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #ccc', marginTop: '0.5rem', fontFamily: 'inherit' }} />
+                                </div>
                             </div>
                         </div>
 
@@ -161,30 +192,19 @@ export default function Profile({ user, setUser }) {
                             <div className="profile-grid-1">
                                 <div className="input-field">
                                     <label>Your Skills (comma separated)</label>
-                                    <input type="text" name="skills" value={formData.skills} onChange={handleChange} placeholder="e.g. React, Python, Machine Learning" />
+                                    <input type="text" name="skills" value={formData.skills} onChange={handleChange} placeholder="e.g. Java, Python, DSA, Web Development" />
+                                    {formData.skills && (
+                                        <ul style={{ marginTop: '0.75rem', paddingLeft: '1.5rem', color: '#555', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                            {formData.skills.split(',').filter(s => s.trim() !== '').map((skill, index) => (
+                                                <li key={index}><strong>{skill.trim()}</strong></li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </div>
                                 <div className="input-field">
                                     <label>Interested Fields (comma separated)</label>
                                     <input type="text" name="interestedFields" value={formData.interestedFields} onChange={handleChange} placeholder="e.g. Web Development, Data Science" />
                                 </div>
-
-                                <div className="input-field">
-                                    <label>Self-Rate Your Overall Skill Level (0 to 5)</label>
-                                    <div className="profile-rating-slider-container">
-                                        <input
-                                            type="range"
-                                            name="skillRating"
-                                            min="0" max="5" step="0.5"
-                                            value={formData.skillRating}
-                                            onChange={handleChange}
-                                            className="profile-rating-slider"
-                                        />
-                                        <span className="profile-rating-value">
-                                            {formData.skillRating} / 5
-                                        </span>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
 
@@ -213,16 +233,20 @@ export default function Profile({ user, setUser }) {
                         <div className="profile-grid-2">
                             <ProfileDataField label="College / University Name" value={formData.collegeName} />
                             <ProfileDataField label="Course & Branch" value={formData.courseBranch} />
+                            <ProfileDataField label="Semester" value={formData.semester} />
+                            <ProfileDataField label="CGPA" value={formData.cgpa} />
+                        </div>
+
+                        <h3 className="profile-section-title profile-section-margin">Experience & Certifications</h3>
+                        <div className="profile-grid-1">
+                            <ProfileDataField label="Certifications" value={formData.certifications} />
+                            <ProfileDataField label="Internship Experience" value={formData.internships} />
                         </div>
 
                         <h3 className="profile-section-title profile-section-margin">Skills & Interests</h3>
                         <div className="profile-grid-1">
                             <ProfileDataField label="Your Skills" value={formData.skills} />
                             <ProfileDataField label="Interested Fields" value={formData.interestedFields} />
-                            <div className="profile-grid-2">
-                                <ProfileDataField label="Overall Skill Level" value={`${formData.skillRating} / 5`} />
-
-                            </div>
                         </div>
 
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>

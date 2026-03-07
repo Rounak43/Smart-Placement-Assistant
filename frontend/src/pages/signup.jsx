@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { db } from "../firebase/firebase";
 import { setDoc, doc } from "firebase/firestore";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function SignUp() {
 
@@ -15,6 +16,8 @@ export default function SignUp() {
   });
 
   const [signupError, setSignupError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleInputChange = (event) => {
     setFormdata({
@@ -96,23 +99,77 @@ export default function SignUp() {
           autoComplete="off"
         />
 
-        <input
-          type="password"
-          name="password"
-          value={formdata.password}
-          placeholder="Create Password"
-          onChange={handleInputChange}
-          autoComplete="new-password"
-        />
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={formdata.password}
+            placeholder="Create Password"
+            onChange={handleInputChange}
+            autoComplete="new-password"
+            style={{ width: '100%', paddingRight: '40px' }}
+          />
+          <button
+            type="button"
+            className="password-toggle-btn"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: 'absolute',
+              right: '12px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: '#888',
+              padding: '0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 'auto',
+              margin: '0',
+              boxShadow: 'none'
+            }}
+          >
+            {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+          </button>
+        </div>
 
-        <input
-          type="password"
-          name="confirmPass"
-          value={formdata.confirmPass}
-          placeholder="Confirm Password"
-          onChange={handleInputChange}
-          autoComplete="new-password"
-        />
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPass"
+            value={formdata.confirmPass}
+            placeholder="Confirm Password"
+            onChange={handleInputChange}
+            autoComplete="new-password"
+            style={{ width: '100%', paddingRight: '40px' }}
+          />
+          <button
+            type="button"
+            className="password-toggle-btn"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            style={{
+              position: 'absolute',
+              right: '12px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: '#888',
+              padding: '0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 'auto',
+              margin: '0',
+              boxShadow: 'none'
+            }}
+          >
+            {showConfirmPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+          </button>
+        </div>
 
         <button type="submit">Sign Up</button>
 

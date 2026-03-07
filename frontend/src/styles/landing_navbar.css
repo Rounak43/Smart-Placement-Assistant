@@ -1,11 +1,12 @@
 .navbar {
     width: 90%;
     height: 64px;
-    background-color: transparent;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid transparent;
-    box-shadow: none;
+    background-color: var(--bg-secondary);
+    /* Glassmorphism slate */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -87,7 +88,58 @@
 
 @media (max-width: 768px) {
     .navbar {
-        display: none;
-        /* Hide landing navbar on phone */
+        width: calc(100% - 32px);
+        padding: 0 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 18px;
+        grid-column: unset;
+    }
+
+    .nav-actions {
+        gap: 12px;
+        grid-column: unset;
+        justify-self: unset;
+    }
+
+    .nav-actions .btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .nav-actions .btn.ghost {
+        padding: 8px 8px;
+        border: none;
+        /* Remove border to save space on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        width: calc(100% - 24px);
+        padding: 0 12px;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .nav-actions {
+        gap: 8px;
+    }
+
+    .nav-actions .btn {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .nav-actions .btn.ghost {
+        padding: 6px 4px;
+        /* Minimal padding for ghost button */
+        font-size: 13px;
     }
 }

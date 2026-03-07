@@ -17,8 +17,6 @@ function Setting() {
     const [passwordSuccess, setPasswordSuccess] = useState('');
 
     const [notifications, setNotifications] = useState({
-        jobAlerts: true,
-        interviewUpdates: true,
         emailNotifications: false
     });
 
@@ -169,35 +167,7 @@ function Setting() {
                     Notifications
                 </div>
                 <div className="toggle-list">
-                    <div className="toggle-item">
-                        <div className="toggle-info">
-                            <h4>Job Alerts</h4>
-                            <p>Get notified about new jobs matching your profile</p>
-                        </div>
-                        <label className="switch">
-                            <input
-                                type="checkbox"
-                                checked={notifications.jobAlerts}
-                                onChange={() => toggleNotification('jobAlerts')}
-                            />
-                            <span className="slider"></span>
-                        </label>
-                    </div>
 
-                    <div className="toggle-item">
-                        <div className="toggle-info">
-                            <h4>Interview Updates</h4>
-                            <p>Receive updates regarding interview schedules</p>
-                        </div>
-                        <label className="switch">
-                            <input
-                                type="checkbox"
-                                checked={notifications.interviewUpdates}
-                                onChange={() => toggleNotification('interviewUpdates')}
-                            />
-                            <span className="slider"></span>
-                        </label>
-                    </div>
 
                     <div className="toggle-item">
                         <div className="toggle-info">
