@@ -58,6 +58,7 @@ export default function DashboardHome() {
                     <p>Track your progress, improve your skills, and get closer to your dream job every day.</p>
                 </div>
             </header>
+
         </div>
     );
 }

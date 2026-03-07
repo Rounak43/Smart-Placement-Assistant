@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import DashboardHome from './pages/DashboardHome'
 import Profile from './pages/Profile'
 import Setting from './pages/Setting'
+import AnalysisPage from './pages/AnalysisPage'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -46,6 +47,7 @@ function App() {
             {/* Default Dashboard View */}
             <Route index element={<DashboardHome />} />
             {/* <Route path="jobs" element={<Jobs />} /> */}
+            <Route path="analysis" element={<AnalysisPage />} />
             <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
             <Route path="setting" element={<Setting />} />
           </Route>

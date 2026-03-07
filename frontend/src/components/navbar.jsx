@@ -126,9 +126,9 @@ export default function Navbar({ user }) {
                         </Link>
                     </li>
                     <li>
-                        <div className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                        <Link to="/dashboard/analysis" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
                             <AssessmentIcon className="menu-item-icon" /> <span>Analysis/Performance</span>
-                        </div>
+                        </Link>
                     </li>
                     <li>
                         <Link to="/dashboard/profile" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
