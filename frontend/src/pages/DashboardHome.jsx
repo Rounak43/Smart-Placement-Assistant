@@ -43,12 +43,7 @@ export default function DashboardHome() {
 
     const displayFirstName = dbName
         ? dbName
-        : (user?.displayName ? user.displayName.split(' ')[0] : 'User');
-
-
-
-
-
+        : (user?.displayName ? user.displayName.split(' ')[0] : 'User')
     return (
         <div className="dashboard-home-container">
             {/* Section 1: Welcome Header */}

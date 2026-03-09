@@ -10,6 +10,7 @@ import DashboardHome from './pages/DashboardHome'
 import Profile from './pages/Profile'
 import Setting from './pages/Setting'
 import AnalysisPage from './pages/AnalysisPage'
+import Roadmap from './pages/roadmap'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -50,6 +51,7 @@ function App() {
             <Route path="analysis" element={<AnalysisPage />} />
             <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
             <Route path="setting" element={<Setting />} />
+            <Route path="roadmap" element={<Roadmap />} />
           </Route>
         </Routes>
       </div>

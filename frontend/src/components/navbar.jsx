@@ -3,11 +3,10 @@ import '../styles/navbar.css'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import HomeIcon from '@mui/icons-material/Home'
-import WorkIcon from '@mui/icons-material/Work'
-import DescriptionIcon from '@mui/icons-material/Description'
 import AssessmentIcon from '@mui/icons-material/Assessment'
 import PersonIcon from '@mui/icons-material/Person'
 import SettingsIcon from '@mui/icons-material/Settings'
+import RouteIcon from '@mui/icons-material/Route'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase/firebase'
@@ -123,6 +122,11 @@ export default function Navbar({ user }) {
                     <li>
                         <Link to="/dashboard" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
                             <HomeIcon className="menu-item-icon" /> <span>Home</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/dashboard/roadmap" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                            <RouteIcon className="menu-item-icon" /> <span>Roadmap</span>
                         </Link>
                     </li>
                     <li>
