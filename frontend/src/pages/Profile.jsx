@@ -21,7 +21,13 @@ export default function Profile({ user, setUser }) {
         certifications: "",
         internships: "",
         skills: "", // Comma separated
-        interestedFields: "" // Comma separated
+        interestedFields: "", // Comma separated
+        dreamCompany: "",
+        targetRole: "Software Engineer",
+        codingLevel: "Beginner",
+        graduationYear: "2026",
+        focusArea: "DSA",
+        weeklyStudyTime: "5–10 hours"
     })
 
     // Fetch existing custom data from Firestore when component mounts
@@ -43,7 +49,13 @@ export default function Profile({ user, setUser }) {
                             certifications: data.certifications || "",
                             internships: data.internships || "",
                             skills: data.skills || "",
-                            interestedFields: data.interestedFields || ""
+                            interestedFields: data.interestedFields || "",
+                            dreamCompany: data.dreamCompany || "",
+                            targetRole: data.targetRole || "Software Engineer",
+                            codingLevel: data.codingLevel || "Beginner",
+                            graduationYear: data.graduationYear || "2026",
+                            focusArea: data.focusArea || "DSA",
+                            weeklyStudyTime: data.weeklyStudyTime || "5–10 hours"
                         }))
                     }
                 } catch (error) {
@@ -85,6 +97,12 @@ export default function Profile({ user, setUser }) {
                 internships: formData.internships,
                 skills: formData.skills,
                 interestedFields: formData.interestedFields,
+                dreamCompany: formData.dreamCompany,
+                targetRole: formData.targetRole,
+                codingLevel: formData.codingLevel,
+                graduationYear: formData.graduationYear,
+                focusArea: formData.focusArea,
+                weeklyStudyTime: formData.weeklyStudyTime,
                 updatedAt: new Date()
             }, { merge: true }) // Merge so we don't overwrite if other fields exist
 
@@ -208,6 +226,65 @@ export default function Profile({ user, setUser }) {
                             </div>
                         </div>
 
+                        {/* Onboarding Goals Section */}
+                        <div className="profile-section-margin">
+                            <h3 className="profile-section-title">Career Goals & Roadmap Preferences</h3>
+                            <div className="profile-grid-2">
+                                <div className="input-field">
+                                    <label>Dream Company</label>
+                                    <input type="text" name="dreamCompany" value={formData.dreamCompany} onChange={handleChange} placeholder="e.g. Google, Amazon" />
+                                </div>
+                                <div className="input-field">
+                                    <label>Target Role</label>
+                                    <select name="targetRole" value={formData.targetRole} onChange={handleChange}>
+                                        <option value="Software Engineer">Software Engineer</option>
+                                        <option value="Web Developer">Web Developer</option>
+                                        <option value="Data Scientist">Data Scientist</option>
+                                        <option value="Data Analyst">Data Analyst</option>
+                                        <option value="AI/ML Engineer">AI/ML Engineer</option>
+                                    </select>
+                                </div>
+                                <div className="input-field">
+                                    <label>Current Coding Level</label>
+                                    <select name="codingLevel" value={formData.codingLevel} onChange={handleChange}>
+                                        <option value="Beginner">Beginner</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Advanced">Advanced</option>
+                                    </select>
+                                </div>
+                                <div className="input-field">
+                                    <label>Graduation Year</label>
+                                    <select name="graduationYear" value={formData.graduationYear} onChange={handleChange}>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                        <option value="2027">2027</option>
+                                        <option value="2028">2028</option>
+                                    </select>
+                                </div>
+                                <div className="input-field">
+                                    <label>Weekly Study Time</label>
+                                    <select name="weeklyStudyTime" value={formData.weeklyStudyTime} onChange={handleChange}>
+                                        <option value="5–10 hours">5–10 hours</option>
+                                        <option value="10–20 hours">10–20 hours</option>
+                                        <option value="20+ hours">20+ hours</option>
+                                    </select>
+                                </div>
+                                <div className="input-field">
+                                    <label>Primary Preparation Focus</label>
+                                    <select name="focusArea" value={formData.focusArea} onChange={handleChange}>
+                                        <option value="DSA">DSA</option>
+                                        <option value="Web Development">Web Development</option>
+                                        <option value="Software Engineering">Software Engineering</option>
+                                        <option value="Data Science">Data Science</option>
+                                        <option value="Data Analysis">Data Analysis</option>
+                                        <option value="AI / Machine Learning">AI / Machine Learning</option>
+                                        <option value="Core Computer Science Subjects">Core Computer Science Subjects</option>
+                                        <option value="Full Stack Development">Full Stack Development</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Action Buttons */}
                         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                             <button type="submit" disabled={loading} className="profile-submit-btn" style={{ flex: 1 }}>
@@ -247,6 +324,16 @@ export default function Profile({ user, setUser }) {
                         <div className="profile-grid-1">
                             <ProfileDataField label="Your Skills" value={formData.skills} />
                             <ProfileDataField label="Interested Fields" value={formData.interestedFields} />
+                        </div>
+
+                        <h3 className="profile-section-title profile-section-margin">Career Goals & Roadmap Preferences</h3>
+                        <div className="profile-grid-2">
+                            <ProfileDataField label="Dream Company" value={formData.dreamCompany} />
+                            <ProfileDataField label="Target Role" value={formData.targetRole} />
+                            <ProfileDataField label="Current Coding Level" value={formData.codingLevel} />
+                            <ProfileDataField label="Graduation Year" value={formData.graduationYear} />
+                            <ProfileDataField label="Weekly Study Time" value={formData.weeklyStudyTime} />
+                            <ProfileDataField label="Primary Preparation Focus" value={formData.focusArea} />
                         </div>
 
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>

@@ -109,6 +109,9 @@ export default function OnboardingModal({ user, onComplete }) {
                         <select name="focusArea" value={formData.focusArea} onChange={handleChange} required>
                             <option value="DSA">DSA</option>
                             <option value="Web Development">Web Development</option>
+                            <option value="Software Engineering">Software Engineering</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Data Analysis">Data Analysis</option>
                             <option value="AI / Machine Learning">AI / Machine Learning</option>
                             <option value="Core Computer Science Subjects">Core Computer Science Subjects</option>
                             <option value="Full Stack Development">Full Stack Development</option>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { motion } from 'framer-motion';
 import '../styles/DashboardHome.css';
@@ -14,55 +14,104 @@ export default function DashboardHome() {
     const { user } = useOutletContext() || {};
     const [dbName, setDbName] = useState('');
     const [aimlRoadmap, setAimlRoadmap] = useState(null);
+    const [webDevRoadmap, setWebDevRoadmap] = useState(null);
+    const [softwareEngineeringRoadmap, setSoftwareEngRoadmap] = useState(null);
+    const [dataScienceRoadmap, setDataScienceRoadmap] = useState(null);
+    const [dataAnalysisRoadmap, setDataAnalysisRoadmap] = useState(null);
+    const [focusArea, setFocusArea] = useState('AI / ML');
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            if (user?.uid) {
-                try {
-                    const docRef = doc(db, 'users', user.uid);
-                    const docSnap = await getDoc(docRef);
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        if (data.name) {
-                            setDbName(data.name);
-                        }
-                        if (data.aimlRoadmap) {
-                            setAimlRoadmap(data.aimlRoadmap);
-                        } else {
-                            setAimlRoadmap({});
-                        }
-                    }
-                } catch (error) {
-                    console.error("DashboardHome: Error fetching user data from Firestore:", error);
-                } finally {
-                    setLoading(false);
-                }
-            } else {
-                setLoading(false);
-            }
-        };
+        if (!user?.uid) {
+            setLoading(false);
+            return;
+        }
 
-        fetchUserData();
+        const docRef = doc(db, 'users', user.uid);
+        const unsubscribe = onSnapshot(docRef, (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                if (data.name) {
+                    setDbName(data.name);
+                }
+                if (data.aimlRoadmap) {
+                    setAimlRoadmap(data.aimlRoadmap);
+                } else {
+                    setAimlRoadmap({});
+                }
+                if (data.webDevRoadmap) {
+                    setWebDevRoadmap(data.webDevRoadmap);
+                } else {
+                    setWebDevRoadmap({});
+                }
+                if (data.softwareEngineeringRoadmap) {
+                    setSoftwareEngRoadmap(data.softwareEngineeringRoadmap);
+                } else {
+                    setSoftwareEngRoadmap({});
+                }
+                if (data.dataScienceRoadmap) {
+                    setDataScienceRoadmap(data.dataScienceRoadmap);
+                } else {
+                    setDataScienceRoadmap({});
+                }
+                if (data.dataAnalysisRoadmap) {
+                    setDataAnalysisRoadmap(data.dataAnalysisRoadmap);
+                } else {
+                    setDataAnalysisRoadmap({});
+                }
+                if (data.focusArea) {
+                    setFocusArea(data.focusArea);
+                }
+            }
+            setLoading(false);
+        }, (error) => {
+            console.error("DashboardHome: Error fetching user data from Firestore:", error);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
     }, [user]);
 
     const displayFirstName = dbName
         ? dbName.split(' ')[0]
         : (user?.displayName ? user.displayName.split(' ')[0] : 'User');
 
-    // Calculate AI/ML stats
+    // Calculate stats based on focus area
     let completedCount = 0;
     let unlockedTotal = 1; // Step 1 is always unlocked
+    let activeRoadmapData = {};
+    let focusAreaLabel = 'AI/ML Readiness Score';
+    let welcomeSubTitle = 'AI/ML';
 
-    if (aimlRoadmap) {
+    if (focusArea === 'Web Development') {
+        activeRoadmapData = webDevRoadmap;
+        focusAreaLabel = 'Web Dev Readiness Score';
+        welcomeSubTitle = 'Web Development';
+    } else if (focusArea === 'Software Engineering') {
+        activeRoadmapData = softwareEngineeringRoadmap;
+        focusAreaLabel = 'Software Engineering Readiness Score';
+        welcomeSubTitle = 'Software Engineering';
+    } else if (focusArea === 'Data Science') {
+        activeRoadmapData = dataScienceRoadmap;
+        focusAreaLabel = 'Data Science Readiness Score';
+        welcomeSubTitle = 'Data Science';
+    } else if (focusArea === 'Data Analysis') {
+        activeRoadmapData = dataAnalysisRoadmap;
+        focusAreaLabel = 'Data Analysis Readiness Score';
+        welcomeSubTitle = 'Data Analysis';
+    } else {
+        activeRoadmapData = aimlRoadmap;
+    }
+
+    if (activeRoadmapData) {
         for (let i = 1; i <= 10; i++) {
-            if (aimlRoadmap[`step${i}Passed`] === true) {
+            if (activeRoadmapData[`step${i}Passed`] === true) {
                 completedCount++;
             }
         }
         for (let i = 2; i <= 10; i++) {
-            if (aimlRoadmap[`step${i - 1}Passed`] === true) {
+            if (activeRoadmapData[`step${i - 1}Passed`] === true) {
                 unlockedTotal++;
             }
         }
@@ -87,7 +136,7 @@ export default function DashboardHome() {
                     transition={{ duration: 0.5 }}
                 >
                     <h1>Welcome back, {displayFirstName} 🚀</h1>
-                    <p>Track your AI/ML progress, improve your skills, and get closer to your dream job every day.</p>
+                    <p>Track your {welcomeSubTitle} progress, improve your skills, and get closer to your dream job every day.</p>
                 </motion.div>
             </header>
 
@@ -103,7 +152,9 @@ export default function DashboardHome() {
                         <SpeedIcon fontSize="large" />
                     </div>
                     <div className="stat-content">
-                        <span className="stat-label">Roadmap Completion</span>
+                        <span className="stat-label">
+                            {focusAreaLabel}
+                        </span>
                         <h3 className="stat-value">{readinessScore}%</h3>
                     </div>
                 </motion.div>
