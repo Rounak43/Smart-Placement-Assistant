@@ -23,47 +23,6 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-// Animated Stat Counter Component
-const AnimatedStat = ({ end, duration = 2000, suffix = "" }) => {
-  const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const nodeRef = React.useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (nodeRef.current) observer.observe(nodeRef.current);
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
-  useEffect(() => {
-    if (!hasAnimated) return;
-    let startTime;
-    const animate = (time) => {
-      if (!startTime) startTime = time;
-      const progress = (time - startTime) / duration;
-      if (progress < 1) {
-        setCount(Math.min(Math.floor(end * progress), end));
-        requestAnimationFrame(animate);
-      } else {
-        setCount(end);
-      }
-    };
-    requestAnimationFrame(animate);
-  }, [end, duration, hasAnimated]);
-
-  return (
-    <div className="stat-item" ref={nodeRef}>
-      <h3 className="stat-number">{count}{suffix}</h3>
-    </div>
-  );
-};
 
 export default function Landingpage() {
   const [user, setUser] = useState(null)
@@ -144,25 +103,6 @@ export default function Landingpage() {
         </div>
       </main>
 
-      {/* Stats Strip */}
-      <section className="stats-strip fade-in-section">
-        <div className="stats-container glass-panel">
-          <div className="stat-group">
-            <AnimatedStat end={5000} suffix="+" />
-            <p>Active Students</p>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-group">
-            <AnimatedStat end={200} suffix="+" />
-            <p>Hiring Companies</p>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-group">
-            <AnimatedStat end={95} suffix="%" />
-            <p>Placement Rate</p>
-          </div>
-        </div>
-      </section>
 
       {/* 2. Problem Section */}
       <section className="problem-section fade-in-section">
