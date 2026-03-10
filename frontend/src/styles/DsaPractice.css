@@ -1,0 +1,362 @@
+.dsa-practice-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: var(--text-primary);
+}
+
+.dsa-practice-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.dsa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.dsa-header-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #60A5FA, #A020F0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dsa-header-text p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 500px;
+}
+
+.dsa-progress-card {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dsa-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.dsa-progress-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.dsa-progress-header span {
+    font-weight: 700;
+    color: #60A5FA;
+}
+
+.dsa-progress-bar-container {
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dsa-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+    border-radius: 6px;
+}
+
+.dsa-controls {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.dsa-search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-secondary);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    flex: 1;
+    min-width: 250px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dsa-search-bar .search-icon {
+    color: var(--text-secondary);
+    margin-right: 0.8rem;
+}
+
+.dsa-search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    width: 100%;
+    font-size: 1rem;
+    outline: none;
+}
+
+.dsa-filter .difficulty-select {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+.dsa-topic-section {
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dsa-topic-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dsa-topic-header:focus {
+    outline: none;
+}
+
+.dsa-topic-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.dsa-topic-content {
+    padding: 0 1rem 1rem 1rem;
+}
+
+.dsa-problem-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    background-color: rgba(255, 255, 255, 0.015);
+    flex-wrap: nowrap;
+    gap: 1rem;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dsa-problem-left {
+    display: flex;
+    align-items: center;
+    flex: 2;
+    min-width: 0;
+    gap: 1rem;
+}
+
+.dsa-checkbox {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    padding: 0;
+    flex-shrink: 0;
+    width: 24px;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dsa-checkbox:focus {
+    outline: none;
+}
+
+.dsa-checkbox.solved {
+    color: #10B981;
+    /* Green color for solved */
+}
+
+.unchecked-icon,
+.checked-icon {
+    font-size: 1.2rem !important;
+}
+
+.dsa-save-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    padding: 0;
+    flex-shrink: 0;
+    width: 24px;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dsa-save-btn:focus {
+    outline: none;
+}
+
+.dsa-save-btn.saved {
+    color: #F59E0B;
+}
+
+.unsaved-icon,
+.saved-icon {
+    font-size: 1.2rem !important;
+}
+
+.dsa-problem-title {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dsa-problem-title:focus,
+.dsa-problem-title:active {
+    outline: none;
+    color: var(--text-primary);
+    background-color: transparent;
+}
+
+.dsa-problem-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 100px;
+}
+
+.difficulty-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.difficulty-badge.easy {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.difficulty-badge.medium {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.difficulty-badge.hard {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.dsa-problem-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 120px;
+}
+
+.company-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    object-fit: contain;
+    background-color: white;
+    padding: 2px;
+}
+
+.company-badge-fallback {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+.dsa-no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+    .dsa-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dsa-progress-card {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .dsa-problem-card {
+        padding: 0.8rem;
+        gap: 0.5rem;
+    }
+
+    .dsa-problem-title {
+        font-size: 0.95rem;
+    }
+
+    .dsa-problem-center,
+    .dsa-problem-right {
+        min-width: auto;
+    }
+
+    .company-logo {
+        width: 18px;
+        height: 18px;
+    }
+}

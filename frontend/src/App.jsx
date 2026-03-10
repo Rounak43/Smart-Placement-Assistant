@@ -11,6 +11,9 @@ import Profile from './pages/Profile'
 import Setting from './pages/Setting'
 import AnalysisPage from './pages/AnalysisPage'
 import Roadmap from './pages/roadmap'
+import DsaPractice from './pages/DsaPractice'
+import AptitudeTest from './pages/AptitudeTest'
+import AptitudeTestExam from './pages/AptitudeTestExam'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -52,7 +55,12 @@ function App() {
             <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
             <Route path="setting" element={<Setting />} />
             <Route path="roadmap" element={<Roadmap />} />
+            <Route path="dsa-practice" element={<DsaPractice />} />
+            <Route path="aptitude" element={<AptitudeTest />} />
           </Route>
+
+          {/* Hidden Aptitude Exam Route - not in nav menu */}
+          <Route path="/aptitude-exam" element={user ? <AptitudeTestExam /> : <Navigate to="/" />} />
         </Routes>
       </div>
     </BrowserRouter>

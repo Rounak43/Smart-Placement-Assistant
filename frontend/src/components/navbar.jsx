@@ -7,6 +7,8 @@ import AssessmentIcon from '@mui/icons-material/Assessment'
 import PersonIcon from '@mui/icons-material/Person'
 import SettingsIcon from '@mui/icons-material/Settings'
 import RouteIcon from '@mui/icons-material/Route'
+import CodeIcon from '@mui/icons-material/Code'
+import QuizIcon from '@mui/icons-material/Quiz'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase/firebase'
@@ -127,6 +129,16 @@ export default function Navbar({ user }) {
                     <li>
                         <Link to="/dashboard/roadmap" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
                             <RouteIcon className="menu-item-icon" /> <span>Roadmap</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/dashboard/dsa-practice" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                            <CodeIcon className="menu-item-icon" /> <span>DSA Practice</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/dashboard/aptitude" className="nav-link-item" onClick={() => setDrawerOpen(false)}>
+                            <QuizIcon className="menu-item-icon" /> <span>Aptitude Test</span>
                         </Link>
                     </li>
                     <li>
