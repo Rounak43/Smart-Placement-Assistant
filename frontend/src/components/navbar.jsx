@@ -9,10 +9,12 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import RouteIcon from '@mui/icons-material/Route'
 import CodeIcon from '@mui/icons-material/Code'
 import QuizIcon from '@mui/icons-material/Quiz'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase/firebase'
 import { Link } from 'react-router-dom'
+import { isAdmin } from '../utils/adminConfig'
 
 export default function Navbar({ user }) {
     const [drawerOpen, setDrawerOpen] = useState(false)
@@ -156,6 +158,19 @@ export default function Navbar({ user }) {
                             <SettingsIcon className="menu-item-icon" /> <span>Setting</span>
                         </Link>
                     </li>
+                    {isAdmin(user) && (
+                        <li style={{ marginTop: 12, borderTop: '1px solid rgba(99,102,241,0.2)', paddingTop: 12 }}>
+                            <Link
+                                to="/admin"
+                                className="nav-link-item"
+                                onClick={() => setDrawerOpen(false)}
+                                style={{ background: 'linear-gradient(90deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1))', borderRadius: 10, color: '#818cf8' }}
+                            >
+                                <AdminPanelSettingsIcon className="menu-item-icon" style={{ color: '#818cf8' }} />
+                                <span style={{ fontWeight: 600 }}>Admin Panel</span>
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </div>
 

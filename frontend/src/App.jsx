@@ -15,6 +15,13 @@ import DsaPractice from './pages/DsaPractice'
 import AptitudeTest from './pages/AptitudeTest'
 import AptitudeTestExam from './pages/AptitudeTestExam'
 
+// Admin Panel
+import AdminRoute from './components/AdminRoute'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import UsersManagement from './pages/admin/UsersManagement'
+import UserDetails from './pages/admin/UserDetails'
+
 function App() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -32,13 +39,6 @@ function App() {
 
   if (loading) return <div>Loading Application...</div>
 
-  // Minimal loading spinner for Suspense
-  const FallbackLoader = () => (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'var(--text-primary)' }}>
-      Loading Content...
-    </div>
-  )
-
   return (
     <BrowserRouter>
       <div className="App">
@@ -46,11 +46,9 @@ function App() {
           {/* Public Route */}
           <Route path="/" element={!user ? <Landingpage /> : <Navigate to="/dashboard" />} />
 
-          {/* Protected Route */}
+          {/* Protected Dashboard Routes */}
           <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/" />}>
-            {/* Default Dashboard View */}
             <Route index element={<DashboardHome />} />
-            {/* <Route path="jobs" element={<Jobs />} /> */}
             <Route path="analysis" element={<AnalysisPage />} />
             <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
             <Route path="setting" element={<Setting />} />
@@ -59,8 +57,17 @@ function App() {
             <Route path="aptitude" element={<AptitudeTest />} />
           </Route>
 
-          {/* Hidden Aptitude Exam Route - not in nav menu */}
+          {/* Hidden Aptitude Exam Route */}
           <Route path="/aptitude-exam" element={user ? <AptitudeTestExam /> : <Navigate to="/" />} />
+
+          {/* ── Admin Routes (protected by AdminRoute) ── */}
+          <Route element={<AdminRoute user={user} />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<UsersManagement />} />
+              <Route path="users/:userId" element={<UserDetails />} />
+            </Route>
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>
@@ -68,4 +75,3 @@ function App() {
 }
 
 export default App
-
