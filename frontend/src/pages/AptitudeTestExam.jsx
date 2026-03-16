@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
 import '../styles/AptitudeTestExam.css';
 
 // ─── Question Bank ────────────────────────────────────────────────────────────
@@ -74,7 +76,7 @@ function buildInitialAnswers() {
     return Array(TOTAL_QUESTIONS).fill(null);
 }
 
-export default function AptitudeTestExam() {
+export default function AptitudeTestExam({ user }) {
     const navigate = useNavigate();
 
     const [answers, setAnswers] = useState(buildInitialAnswers);
@@ -84,9 +86,35 @@ export default function AptitudeTestExam() {
     const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
     const [submitted, setSubmitted] = useState(false);
     const [results, setResults] = useState(null);
+    const [lastAttemptAt, setLastAttemptAt] = useState(null);
+    const [nextAllowedAt, setNextAllowedAt] = useState(null);
+
+    // Load last attempt from Firestore so we can enforce once-per-week
+    useEffect(() => {
+        if (!user?.uid) return;
+        const unsub = onSnapshot(doc(db, 'users', user.uid), (snapshot) => {
+            if (!snapshot.exists()) return;
+            const data = snapshot.data();
+            const last = data?.aptitudeLastResult?.completedAt;
+            if (last) {
+                const next = last + 7 * 24 * 60 * 60 * 1000;
+                setLastAttemptAt(last);
+                setNextAllowedAt(next);
+            } else {
+                setLastAttemptAt(null);
+                setNextAllowedAt(null);
+            }
+        }, (err) => {
+            console.error('Error reading aptitude attempt data:', err);
+        });
+
+        return () => unsub();
+    }, [user?.uid]);
+
+    const isWeeklyLocked = lastAttemptAt && Date.now() < (lastAttemptAt + 7 * 24 * 60 * 60 * 1000);
 
     // Timer
-    const handleSubmit = useCallback(() => {
+    const handleSubmit = useCallback(async () => {
         const sectionScores = {};
         SECTION_NAMES.forEach(s => { sectionScores[s] = { correct: 0, total: 10, attempted: 0 }; });
 
@@ -103,15 +131,41 @@ export default function AptitudeTestExam() {
         });
 
         const attempted = answers.filter(a => a !== null).length;
-        setResults({
+        const timeTaken = TOTAL_TIME - timeLeft;
+        const accuracy = attempted > 0 ? Math.round((totalCorrect / attempted) * 100) : 0;
+        const resultData = {
             totalCorrect,
             attempted,
-            accuracy: attempted > 0 ? Math.round((totalCorrect / attempted) * 100) : 0,
+            accuracy,
+            correctlyAnswered: totalCorrect,
             overallPercent: Math.round((totalCorrect / TOTAL_QUESTIONS) * 100),
             sectionScores
-        });
+        };
+        setResults(resultData);
         setSubmitted(true);
-    }, [answers]);
+
+        // Persist to Firestore
+        if (user?.uid) {
+            try {
+                await setDoc(
+                    doc(db, 'users', user.uid),
+                    {
+                        aptitudeLastResult: {
+                            score: totalCorrect,
+                            total: TOTAL_QUESTIONS,
+                            accuracy,
+                            timeTaken,
+                            correctlyAnswered: totalCorrect,
+                            completedAt: Date.now()
+                        }
+                    },
+                    { merge: true }
+                );
+            } catch (err) {
+                console.error('Error saving aptitude result:', err);
+            }
+        }
+    }, [answers, timeLeft, user?.uid]);
 
     useEffect(() => {
         if (submitted) return;
@@ -173,6 +227,38 @@ export default function AptitudeTestExam() {
     const timerDanger = timeLeft < 300;
 
     const q = questions[currentQ];
+
+    const formatDate = (ts) => {
+        if (!ts) return '—';
+        return new Date(ts).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+    };
+
+    if (isWeeklyLocked && !submitted) {
+        return (
+            <div className="exam-results-page">
+                <div className="exam-results-card">
+                    <div className="results-header">
+                        <div className="results-trophy">⏳</div>
+                        <h1>Weekly Test Locked</h1>
+                        <p>This aptitude test can be taken once every 7 days.</p>
+                    </div>
+                    <div className="results-summary-row">
+                        <div className="res-stat-card">
+                            <div className="res-stat-val">{lastAttemptAt ? formatDate(lastAttemptAt) : '—'}</div>
+                            <div className="res-stat-label">Last Attempt</div>
+                        </div>
+                        <div className="res-stat-card">
+                            <div className="res-stat-val">{nextAllowedAt ? formatDate(nextAllowedAt) : '—'}</div>
+                            <div className="res-stat-label">Next Available</div>
+                        </div>
+                    </div>
+                    <div className="results-actions">
+                        <button className="res-btn primary" onClick={() => window.history.back()}>Back</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     // ─── RESULTS SCREEN ──────────────────────────────────────────────────────
     if (submitted && results) {

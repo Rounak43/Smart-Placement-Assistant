@@ -1,7 +1,7 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import PlacementReadiness from '../components/PlacementReadiness';
-import PerformanceAnalyst from '../components/PerformanceAnalyst';
+import PerformanceAnalystClean from '../components/PerformanceAnalystClean';
 import '../styles/DashboardHome.css';
 
 export default function AnalysisPage() {
@@ -18,7 +18,7 @@ export default function AnalysisPage() {
 
             <div style={{ padding: '0 2rem' }}>
                 <PlacementReadiness user={user} />
-                <PerformanceAnalyst user={user} />
+                <PerformanceAnalystClean user={user} />
             </div>
         </div>
     );

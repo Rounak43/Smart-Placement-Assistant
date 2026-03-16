@@ -58,7 +58,7 @@ function App() {
           </Route>
 
           {/* Hidden Aptitude Exam Route */}
-          <Route path="/aptitude-exam" element={user ? <AptitudeTestExam /> : <Navigate to="/" />} />
+          <Route path="/aptitude-exam" element={user ? <AptitudeTestExam user={user} /> : <Navigate to="/" />} />
 
           {/* ── Admin Routes (protected by AdminRoute) ── */}
           <Route element={<AdminRoute user={user} />}>
